@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { loginAsync } from './store/user/loginSlice';
-import { LoginRequest } from './api/user/login';
+import { loginAsync } from './store/user/actions/loginAction';
+import { ILoginRequest } from './api/user/login';
 import { useAppDispatch } from './store/store';
 
 function App() {
@@ -12,10 +12,10 @@ function App() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const credentials: LoginRequest = { email, password };
-		dispatch(loginAsync(credentials));
+		const credentials: ILoginRequest = { email, password };
+		await dispatch(loginAsync(credentials));
 	};
 
 	return (

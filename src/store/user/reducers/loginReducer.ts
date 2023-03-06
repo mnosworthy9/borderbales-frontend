@@ -1,31 +1,25 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import Login, { LoginRequest } from '../../api/user/login';
+import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
+import { loginAsync } from '../actions/loginAction';
+
+interface IAuthState {
   token: string | null;
   isLoading: boolean;
   error: string | null;
 }
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
 	token: null,
 	isLoading: false,
 	error: null,
 };
-
-export const loginAsync = createAsyncThunk(
-	'user/login',
-	async (credentials: LoginRequest) => {
-		const response = await Login(credentials);
-		return response.token;
-	}
-);
 
 const loginSlice = createSlice({
 	name: 'login',
 	initialState,
 	reducers: {
 		setToken(state, action) {
+			// eslint-disable-next-line
 			state.token = action.payload;
 		},
 		clearToken(state) {

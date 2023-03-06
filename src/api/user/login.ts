@@ -1,16 +1,16 @@
 import api from '../api';
 
-export interface LoginRequest {
+export interface ILoginRequest {
   email: string;
   password: string;
 }
 
-interface LoginResponse{
+interface ILoginResponse{
   token: string;
 }
 
-const login = async (credentials: LoginRequest): Promise<LoginResponse> => {
-	const response = await api.post<LoginResponse>('/user/login', credentials);
+const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
+	const response = await api.post<ILoginResponse>('/user/login', credentials);
 	return response.data;
 };
 
