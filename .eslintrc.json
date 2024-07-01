@@ -4,90 +4,18 @@
         "es2021": true
     },
     "extends": [
-        "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking"
+        "standard-with-typescript"
     ],
-    "overrides": [
-    ],
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": "./tsconfig.json"
+        "sourceType": "module"
     },
     "plugins": [
-        "react",
-        "@typescript-eslint"
+        "react"
     ],
     "rules": {
-        "indent": [ "error", "tab" ],
-        "linebreak-style": [ "error", "unix" ],
-        "quotes": [ "error", "single" ],
-        "semi": [ "error", "always" ],
-        "react/react-in-jsx-scope": 0,
-		"@typescript-eslint/naming-convention": [ 
-			"error", 
-			{
-				"selector": "default",
-				"format": ["camelCase"]
-			},
-			{
-				"selector": "variable",
-				"format": ["camelCase", "UPPER_CASE"]
-			},
-			{
-				"selector": "parameter",
-				"format": ["camelCase"]
-			},
-			{
-                "selector": "class",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "typeParameter",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "enum",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "enumMember",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "typeAlias",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "interface",
-                "format": ["PascalCase"],
-                "prefix": ["I"]
-            },
-			{
-				"selector": "function",
-				"format": ["PascalCase"]
-			},
-            {
-                "selector": "typeLike",
-                "format": ["PascalCase"]
-            },
-            {
-                "selector": "objectLiteralProperty",
-                "format": []
-            }
-		],
-        "@typescript-eslint/no-misused-promises": [
-            "error",
-            {
-              "checksVoidReturn": false
-            }
-          ]
-
     },
-	"settings": {
-		"react": { "version": "detect" }
-	}
+    "overrides": [
+    ]
 }

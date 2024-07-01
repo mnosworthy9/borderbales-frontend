@@ -1,17 +1,14 @@
+import {type LoginRequest} from '../../store/user/actions/loginAction';
 import api from '../api';
 
-export interface ILoginRequest {
-  email: string;
-  password: string;
-}
+const login = async (credentials: LoginRequest): Promise<string | undefined> => {
+	try {
+		const response = await api.post<string>('/api/users/login', credentials);
 
-interface ILoginResponse{
-  token: string;
-}
-
-const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
-	const response = await api.post<ILoginResponse>('/user/login', credentials);
-	return response.data;
+		return response.data;
+	} catch {
+		return undefined;
+	}
 };
 
 export default login;
