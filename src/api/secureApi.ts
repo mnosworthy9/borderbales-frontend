@@ -42,12 +42,11 @@ secureApi.interceptors.response.use(
 					const accessToken: string = await getAccessToken(refreshToken);
 					Cookies.set('accessToken', accessToken);
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 					const originalRequest = error.config;
 					originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					return await secureApi(originalRequest);
 				} catch (error) {
+					console.log(error);
 					clearTokens();
 					logout();
 				}
