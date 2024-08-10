@@ -25,7 +25,7 @@ export const loginAsync = createAsyncThunk(
 	async (credentials: LoginRequest, thunkAPI) => {
 		const response: string | undefined = await login(credentials);
 
-		if (response == undefined){
+		if (response === undefined){
 			return thunkAPI.rejectWithValue("");
 		}
 
