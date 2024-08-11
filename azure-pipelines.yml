@@ -40,7 +40,9 @@ steps:
     mkdir -p $(System.DefaultWorkingDirectory)/.ssh
     mv $(downloadKey.secureFilePath) $(System.DefaultWorkingDirectory)/.ssh/id_rsa
     chmod 600 $(System.DefaultWorkingDirectory)/.ssh/id_rsa
-    ssh-keyscan -H 2a01:4b00:d10f:5300:da3a:ddff:fe2e:d4d9 >> $(System.DefaultWorkingDirectory)/.ssh/known_hosts
+    echo "Adding host to known hosts..."
+    ssh-keyscan -6 -H 2a01:4b00:d10f:5300:da3a:ddff:fe2e:d4d9 >> $(System.DefaultWorkingDirectory)/.ssh/known_hosts
+    echo "SSH Setup complete."
   displayName: 'Setup SSH Key'
 
 - bash: |
