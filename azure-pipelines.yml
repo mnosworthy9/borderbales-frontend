@@ -30,14 +30,19 @@ steps:
     REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
   displayName: 'npm run build'
 
+- task: DownloadSecureFile@1
+  name: sshKey
+  inputs:
+    secureFile: 'id_rsa'
+
 - task: InstallSSHKey@0
   inputs:
-    hostName: '$(RPI_HOST)'
-    userName: '$(RPI_USERNAME)'
-    sshEndpoint: 'My_RPi_Connection' 
-    privateKey: '$(RPI_PRIVATE_KEY)'
-    # If you're using a passphrase for your private key, add it here
-    # passPhrase: 'your_passphrase' 
+    knownHostsEntry: '$(RPI_HOST)'
+    sshKeySecureFile: '$(sshKey.secureFilePath)'
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'My_RPi_Connection'
 
 - task: CopyFilesOverSSH@0
   inputs:
