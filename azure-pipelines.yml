@@ -1,3 +1,8 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
 trigger:
 - master
 
@@ -6,7 +11,7 @@ pool:
 
 variables:
 - group: Front-End
-- group: RPi4  # Include the RPi4 variable group
+- group: RPi4
 
 steps:
 - task: NodeTool@0
@@ -25,19 +30,17 @@ steps:
     REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
   displayName: 'npm run build'
 
-- bash: |
-    echo "Setting up SSH key..."
-    mkdir -p ~/.ssh
-    echo "$(RPI_PRIVATE_KEY)" > ~/.ssh/id_rsa
-    chmod 600 ~/.ssh/id_rsa
-    ssh-keyscan -6 -H $(RPI_HOST) >> ~/.ssh/known_hosts
-    echo "SSH Setup complete."
-  displayName: 'Setup SSH Key'
-  env:
-    RPI_PRIVATE_KEY: $(RPI_PRIVATE_KEY)
+- task: InstallSSHKey@0
+  inputs:
+    hostName: '$(RPI_HOST)'
+    userName: '$(RPI_USERNAME)'
+    sshEndpoint: 'My_RPi_Connection' 
+    privateKey: '$(RPI_PRIVATE_KEY)'
+    # If you're using a passphrase for your private key, add it here
+    # passPhrase: 'your_passphrase' 
 
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'My_RPi_Connection' 
     sourceFolder: '$(Build.SourcesDirectory)/build'
-    targetFolder: '$(RPI_BUILD_DIR)'
+    targetFolder: '$(RPI_USERNAME)@$(RPI_HOST):$(RPI_BUILD_DIR)'
