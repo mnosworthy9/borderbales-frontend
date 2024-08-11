@@ -22,12 +22,11 @@ steps:
     npm install
   displayName: 'npm install'
 
-- env:
-    REACT_APP_API_URL: $(REACT_APP_API_URL)
-    REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
-
 - script: |
     npm run build
+  env:
+    REACT_APP_API_URL: $(REACT_APP_API_URL)
+    REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
   displayName: 'npm run build'
 
 - task: DownloadSecureFile@1
