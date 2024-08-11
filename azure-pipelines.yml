@@ -31,21 +31,22 @@ steps:
   displayName: 'npm run build'
 
 - task: DownloadSecureFile@1
-  name: sshKey
+  name: downloadKey
+  displayName: 'Download SSH Key'
   inputs:
     secureFile: 'id_rsa'
 
-- task: InstallSSHKey@0
-  inputs:
-    knownHostsEntry: '$(RPI_HOST)'
-    sshKeySecureFile: '$(sshKey.secureFilePath)'
+- bash: |
+    echo "Setting up SSH key..."
+    mkdir -p $(System.DefaultWorkingDirectory)/.ssh
+    mv $(downloadKey.secureFilePath) $(System.DefaultWorkingDirectory)/.ssh/id_rsa
+    chmod 600 $(System.DefaultWorkingDirectory)/.ssh/id_rsa
+    echo "Adding host to known hosts..."
+    ssh-keyscan -6 -H $(RPI_HOST) >> $(System.DefaultWorkingDirectory)/.ssh/known_hosts
+    echo "SSH Setup complete."
+  displayName: 'Setup SSH Key'
 
-- task: SSH@0
-  inputs:
-    sshEndpoint: 'My_RPi_Connection'
-
-- task: CopyFilesOverSSH@0
-  inputs:
-    sshEndpoint: 'My_RPi_Connection' 
-    sourceFolder: '$(Build.SourcesDirectory)/build'
-    targetFolder: '$(RPI_USERNAME)@$(RPI_HOST):$(RPI_BUILD_DIR)'
+- bash: |
+    echo "Copying build folder to remote machine..."
+    scp -i $(System.DefaultWorkingDirectory)/build -r $(Build.SourcesDirectory)/build $(RPI_USERNAME)@[$(RPI_HOST)]:$(RPI_BUILD_DIR)
+  displayName: 'Copy Build Folder'
