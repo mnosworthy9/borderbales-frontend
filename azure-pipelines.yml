@@ -48,5 +48,5 @@ steps:
 
 - bash: |
     echo "Copying build folder to remote machine..."
-    scp -i $(System.DefaultWorkingDirectory)/.ssh/id_rsa -r $(Build.SourcesDirectory)/build $(RPI_USERNAME)@[$(RPI_HOST)]:$(RPI_BUILD_DIR)
+    scp -v -i $(System.DefaultWorkingDirectory)/.ssh/id_rsa -r $(Build.SourcesDirectory)/build $(RPI_USERNAME)@[$(RPI_HOST)]:$(RPI_BUILD_DIR)
   displayName: 'Copy Build Folder'
