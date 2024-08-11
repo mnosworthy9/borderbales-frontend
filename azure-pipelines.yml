@@ -47,6 +47,8 @@ steps:
   displayName: 'Setup SSH Key'
 
 - bash: |
+    echo testing ssh
+    ssh -vvv -i $(System.DefaultWorkingDirectory)/.ssh/id_rsa pi@2a01:4b00:d10f:5300:da3a:ddff:fe2e:d4d9
     echo "Copying build folder to remote machine..."
     scp -v -i $(System.DefaultWorkingDirectory)/.ssh/id_rsa -r $(Build.SourcesDirectory)/build $(RPI_USERNAME)@[$(RPI_HOST)]:$(RPI_BUILD_DIR)
   displayName: 'Copy Build Folder'
