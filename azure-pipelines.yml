@@ -28,6 +28,10 @@ steps:
     mkdir -p $(Build.ArtifactStagingDirectory)/build
   displayName: 'Create Artifact Directory'
 
+- script: |
+    cp -R ./build/* $(Build.ArtifactStagingDirectory)/build
+  displayName: 'Copy Build Output to Artifact Directory'
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/build'
