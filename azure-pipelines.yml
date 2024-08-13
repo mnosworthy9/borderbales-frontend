@@ -6,7 +6,6 @@ pool:
 
 variables:
 - group: Front-End
-- group: RPi4
 
 steps:
 - task: NodeTool@0
@@ -24,6 +23,10 @@ steps:
     REACT_APP_API_URL: $(REACT_APP_API_URL)
     REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
   displayName: 'npm run build'
+
+- script: |
+    mkdir -p $(Build.ArtifactStagingDirectory)/build
+  displayName: 'Create Artifact Directory'
 
 - task: PublishPipelineArtifact@1
   inputs:
