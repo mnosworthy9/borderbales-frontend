@@ -6,6 +6,9 @@ pool:
 
 variables:
 - group: Front-End
+- group: Docker
+- name: imageName
+  value: '$(DockerRepo)/$(FrontEndContainer):$(Build.BuildId)'
 
 steps:
 - task: NodeTool@0
@@ -25,16 +28,13 @@ steps:
   displayName: 'npm run build'
 
 - script: |
-    mkdir -p $(Build.ArtifactStagingDirectory)/build
-  displayName: 'Create Artifact Directory'
+    docker build -t $(imageName) .
+  displayName: 'Build Docker image for front-end'
 
 - script: |
-    cp -R ./build/* $(Build.ArtifactStagingDirectory)/build
-  displayName: 'Copy Build Output to Artifact Directory'
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/build'
-    artifact: 'compiled front-end'
-    publishLocation: 'pipeline'
-  displayName: 'Publish Build as Artifact'
+    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin
+    docker push $(imageName)
+  displayName: 'Push Docker image to Docker Hub'
+  env:
+    DockerUsername: $(DockerUsername)
+    DockerPassword: $(DockerPassword)
