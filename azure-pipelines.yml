@@ -28,6 +28,7 @@ steps:
   displayName: 'npm run build'
 
 - script: |
+    echo "Image Name: $(imageName)"
     docker build -t $(imageName) .
   displayName: 'Build Docker image for front-end'
 
