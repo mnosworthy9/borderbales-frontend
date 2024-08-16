@@ -8,7 +8,7 @@ variables:
 - group: Front-End
 - group: Docker
 - name: imageName
-  value: '$(DockerRepo)/$(FrontEndContainer):$(Build.BuildId)'
+  value: '$(DockerRepo)/$(FrontEndContainer):latest'
 
 steps:
 - task: NodeTool@0
@@ -28,7 +28,7 @@ steps:
   displayName: 'npm run build'
 
 - script: |
-    docker build -t $(imageName) .
+    docker build -t $(DockerUsername)/$(imageName) .
   displayName: 'Build Docker image for front-end'
 
 - script: |
