@@ -35,7 +35,7 @@ steps:
 - script: |
     echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin docker.io
     echo "Image Name: $(imageName)"
-    docker push $(imageName)
+    sudo docker push $(imageName)
   displayName: 'Push Docker image to Docker Hub'
   env:
     DockerUsername: $(DockerUsername)
