@@ -33,7 +33,7 @@ steps:
   displayName: 'Build Docker image for front-end'
 
 - script: |
-    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin
+    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin docker.io
     docker push $(imageName)
   displayName: 'Push Docker image to Docker Hub'
   env:
