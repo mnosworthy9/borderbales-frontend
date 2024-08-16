@@ -28,14 +28,12 @@ steps:
   displayName: 'npm run build'
 
 - script: |
-    echo "Image Name: $(imageName)"
     docker build -t $(imageName) .
   displayName: 'Build Docker image for front-end'
 
 - script: |
-    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin docker.io
-    echo "Image Name: $(imageName)"
-    sudo docker push $(imageName)
+    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin
+    docker push $(DockerUsername)/$(imageName)
   displayName: 'Push Docker image to Docker Hub'
   env:
     DockerUsername: $(DockerUsername)
