@@ -33,7 +33,7 @@ steps:
 
 - script: |
     echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin
-    docker push $(DockerUsername)/$(imageName)
+    docker push $(DockerUsername)/$(imageName) -a
   displayName: 'Push Docker image to Docker Hub'
   env:
     DockerUsername: $(DockerUsername)
