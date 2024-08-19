@@ -9,6 +9,8 @@ variables:
 - group: Docker
 - name: imageTag
   value: '$(frontEndContainer)-$(Build.BuildId)'
+- name: dockerHubServiceConnection
+  value: 'Docker Hub'
 
 steps:
 - task: NodeTool@0
