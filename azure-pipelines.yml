@@ -8,7 +8,7 @@ variables:
 - group: Front-End
 - group: Docker
 - name: imageName
-  value: '$(DockerRepo)/$(FrontEndContainer):latest'
+  value: '$(DockerRepo)/$(FrontEndContainer)'
 - name: 'dockerHubServiceConnection'
   value: 'Docker Hub'
 
