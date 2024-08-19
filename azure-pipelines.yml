@@ -9,6 +9,9 @@ variables:
 - group: Docker
 - name: imageName
   value: '$(DockerRepo)/$(FrontEndContainer):latest'
+- name: 'dockerHubServiceConnection'
+  value: 'Docker Hub'
+
 
 steps:
 - task: NodeTool@0
@@ -27,14 +30,21 @@ steps:
     REACT_APP_AUTH_COOKIE: $(REACT_APP_AUTH_COOKIE)
   displayName: 'npm run build'
 
-- script: |
-    docker build -t $(DockerUsername)/$(imageName) .
+- task: Docker@2
   displayName: 'Build Docker image for front-end'
+  inputs:
+    containerRegistry: $(dockerHubServiceConnection)
+    repository: $(DockerUsername)/$(imageName)
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
 
-- script: |
-    echo $(DockerPassword) | docker login -u $(DockerUsername) --password-stdin
-    docker push $(DockerUsername)/$(imageName) -a
+- task: Docker@2
   displayName: 'Push Docker image to Docker Hub'
-  env:
-    DockerUsername: $(DockerUsername)
-    DockerPassword: $(DockerPassword)
+  inputs:
+    containerRegistry: $(dockerHubServiceConnection)
+    repository: $(DockerUsername)/$(imageName)
+    command: 'push'
+    tags: |
+      $(Build.BuildId)
