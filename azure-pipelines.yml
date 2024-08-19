@@ -8,7 +8,7 @@ variables:
 - group: Front-End
 - group: Docker
 - name: imageTag
-  value: '$(FrontEndContainer): $(Build.BuildId)'
+  value: '$(FrontEndContainer):$(Build.BuildId)'
 - name: dockerHubServiceConnection
   value: 'Docker Hub'
 
