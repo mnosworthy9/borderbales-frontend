@@ -42,7 +42,7 @@ steps:
   displayName: 'Push Docker image to Docker Hub'
   inputs:
     containerRegistry: $(dockerHubServiceConnection)
-    repository: $(DockerUsername)/$(imageName)
+    repository: $(DockerRepo)
     command: 'push'
     tags: |
       $(Build.BuildId)
