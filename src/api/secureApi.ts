@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import {clearTokens} from '../store/user/reducers/loginReducer';
+import {clearTokens} from '../store/user/login';
 import {logout} from '../utils/logout';
 import api from './api';
 
